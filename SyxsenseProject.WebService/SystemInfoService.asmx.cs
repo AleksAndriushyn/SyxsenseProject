@@ -19,7 +19,6 @@ namespace SyxsenseProject.WebService
     // [System.Web.Script.Services.ScriptService]
     public class SystemInfoService : System.Web.Services.WebService
     {
-
         [WebMethod]
         public bool IsMachineUp(string hostName)
         {
@@ -32,21 +31,9 @@ namespace SyxsenseProject.WebService
                 string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
                 byte[] buffer = Encoding.ASCII.GetBytes(data);
                 int timeout = 120;
-                PingReply previousReply = pingSender.Send(hostName, timeout, buffer, options);
-                if (previousReply.Status == IPStatus.Success)
+                PingReply Reply = pingSender.Send(hostName, timeout, buffer, options);
+                if (Reply.Status == IPStatus.Success)
                 {
-                    PingReply currentReply = pingSender.Send(hostName, timeout, buffer, options);
-                    var startTimeSpan = TimeSpan.Zero;
-                    var periodTimeSpan = TimeSpan.FromMinutes(5);
-
-                    var timer = new Timer((e) =>
-                    {
-                        if (currentReply != previousReply)
-                        {
-
-                        }
-                    }, null, startTimeSpan, periodTimeSpan);
-                    
                     retVal = true;
                 }
             }

@@ -35,7 +35,13 @@ namespace SyxsenseProject
                 {
                     SystemInfoService systemInfoService = new SystemInfoService();
                     var response = systemInfoService.IsMachineUp(hostNameOrAddress);
-                    Console.WriteLine("Is machine online? {0}", response);
+                    var startTimeSpan = TimeSpan.Zero;
+                    var periodTimeSpan = TimeSpan.FromMinutes(5);
+
+                    var timer = new Timer((e) =>
+                    {
+                        Console.WriteLine("Is machine online? {0}", response);
+                    }, null, startTimeSpan, periodTimeSpan);
                 }
             }
             socket.Close();
